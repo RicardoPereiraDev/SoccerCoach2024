@@ -1,6 +1,9 @@
 package com.devsuperior.SoccerCoach202408.resources;
 
 import com.devsuperior.SoccerCoach202408.entities.CategoryYouthFootball;
+import com.devsuperior.SoccerCoach202408.repositories.CategoryYouthFootballRepository;
+import com.devsuperior.SoccerCoach202408.services.CategoryYouthFootballService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +16,18 @@ import java.util.List;
 @RequestMapping(value = "/categories") //ja temos aqui uma classe que vai responder nesta rota aqui e agora vamos criar o nosso primeiro endpoint, ou seja, a 1ª rota possivel que vai responder alguma coisa.
 public class CategoryYouthFootballResource {
 
+    @Autowired
+    private CategoryYouthFootballService service;
+
     @GetMapping
     public ResponseEntity<List<CategoryYouthFootball>>findAll(){
+        List<CategoryYouthFootball> list = service.findAll();
         //Agora vou ter que instanciar uma classe que implementa uma interface
+        /*
         List<CategoryYouthFootball>list = new ArrayList<>();
         list.add(new CategoryYouthFootball(1L, "Benjamins"));//Agora vou adicionar um objecto do tipo CategoryYoutFootball
         list.add(new CategoryYouthFootball(2L,"Infantis"));
+*/
 
         //Agora para configurar que esse metodo vai ser um webservices, ou seja, vai se um endPoint do meu recurso Category, vou ter que colocar outro annottation GetMapping
         return  ResponseEntity.ok().body(list);
