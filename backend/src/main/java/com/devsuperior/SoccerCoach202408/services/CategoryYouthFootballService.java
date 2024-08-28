@@ -4,6 +4,7 @@ import com.devsuperior.SoccerCoach202408.entities.CategoryYouthFootball;
 import com.devsuperior.SoccerCoach202408.repositories.CategoryYouthFootballRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ public class CategoryYouthFootballService {
 
     @Autowired
     private CategoryYouthFootballRepository repository; //Como eu faço agora para que dentro do meu SERVICE eu injecte automaticamente aqui uma instancia gerida pelo Spring? Vai ser só colocar uma anotation aqui em cima do private CategoryYouthRepository
+
+    /*Se colocar aqui o Transactional, eu garanto que o meu metodo vai executar uma transação com o banco de dados e se colocar o readOnly eu garanto que não vou estar travando o meu banco de dados     */
+    @Transactional(readOnly = true)
     public List<CategoryYouthFootball> findAll(){
         return repository.findAll();
 
