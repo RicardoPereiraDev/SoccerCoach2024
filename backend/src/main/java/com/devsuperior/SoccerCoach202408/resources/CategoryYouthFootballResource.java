@@ -1,5 +1,6 @@
 package com.devsuperior.SoccerCoach202408.resources;
 
+import com.devsuperior.SoccerCoach202408.dto.CategoryYouthFootballDTO;
 import com.devsuperior.SoccerCoach202408.entities.CategoryYouthFootball;
 import com.devsuperior.SoccerCoach202408.repositories.CategoryYouthFootballRepository;
 import com.devsuperior.SoccerCoach202408.services.CategoryYouthFootballService;
@@ -20,8 +21,8 @@ public class CategoryYouthFootballResource {
     private CategoryYouthFootballService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryYouthFootball>>findAll(){
-        List<CategoryYouthFootball> list = service.findAll();
+    public ResponseEntity<List<CategoryYouthFootballDTO>>findAll(){
+        List<CategoryYouthFootballDTO> list = service.findAll();
         //Agora vou ter que instanciar uma classe que implementa uma interface
         /*
         List<CategoryYouthFootball>list = new ArrayList<>();
