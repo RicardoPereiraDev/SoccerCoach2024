@@ -7,6 +7,7 @@ import com.devsuperior.SoccerCoach202408.services.CategoryYouthFootballService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,12 @@ public class CategoryYouthFootballResource {
 
         //Agora para configurar que esse metodo vai ser um webservices, ou seja, vai se um endPoint do meu recurso Category, vou ter que colocar outro annottation GetMapping
         return  ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryYouthFootballDTO>findById(@PathVariable Long id){
+        CategoryYouthFootballDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
     }
 }
 /*O nosso backend vai disponibilizar uma API, ou seja, são os recursos que voçe vai disponibilizar para as aplicações utilizar, por exemplo o app movel vai utilizar a sua API que seria esta parte do codigo backend,

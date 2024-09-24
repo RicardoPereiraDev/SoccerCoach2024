@@ -3,12 +3,14 @@ package com.devsuperior.SoccerCoach202408.services;
 import com.devsuperior.SoccerCoach202408.dto.CategoryYouthFootballDTO;
 import com.devsuperior.SoccerCoach202408.entities.CategoryYouthFootball;
 import com.devsuperior.SoccerCoach202408.repositories.CategoryYouthFootballRepository;
+import com.devsuperior.SoccerCoach202408.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +42,12 @@ public class CategoryYouthFootballService {
         return listDto;
     }
 
+    @Transactional(readOnly = true)
+    public CategoryYouthFootballDTO findById(Long id) {
+        Optional<CategoryYouthFootball> obj = repository.findById(id);
+        CategoryYouthFootball entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //Se o CategoryYouthFootball não existir, este orElseThrow vai lançar esta excepção
+        return new CategoryYouthFootballDTO(entity);
+    }
 }
 
 /*Agora como é que faço com que este metodo aqui do findAll acessar o repository e chamar lá no banco de dados as categorias?
