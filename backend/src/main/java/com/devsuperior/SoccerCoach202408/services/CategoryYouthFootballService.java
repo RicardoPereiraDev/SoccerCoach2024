@@ -48,6 +48,19 @@ public class CategoryYouthFootballService {
         CategoryYouthFootball entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //Se o CategoryYouthFootball não existir, este orElseThrow vai lançar esta excepção
         return new CategoryYouthFootballDTO(entity);
     }
+
+    @Transactional
+    public CategoryYouthFootballDTO insert(CategoryYouthFootballDTO dto) { //Vou ter que converter este dto para uma entidade, vou ter que converter este DTO para um objecto do tipo CategoryYouthFootbal que é a minha entidade.
+        CategoryYouthFootball entity = new CategoryYouthFootball();
+        entity.setName(dto.getName());
+
+        //Agora que já atribui os valores o que irei fazer é salvar e para salvar tenho que chamar o repository e vou chamar o metodo save passando a entidade, só que esse metodo save por padrao ele retorna uma referencia para uma entidade salva por isso a entidade irá receber repository.save da referencia dele;
+        //Depois vou ter que retornar essa entidade convertida novamente para um CategoryYouthFootballDTO
+        entity= repository.save(entity);
+
+        //Agora vou ter que retornar essa entidade para um CategoryYouthFootballDTO
+        return new CategoryYouthFootballDTO(entity); //esta é a implementação
+    }
 }
 
 /*Agora como é que faço com que este metodo aqui do findAll acessar o repository e chamar lá no banco de dados as categorias?
