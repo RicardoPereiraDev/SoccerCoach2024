@@ -1,20 +1,19 @@
 package com.devsuperior.SoccerCoach202408.resources.exceptions;
 
-import com.devsuperior.SoccerCoach202408.services.exceptions.EntityNotFoundException;
+import com.devsuperior.SoccerCoach202408.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.time.Instant;
 
 @ControllerAdvice // É isto que vai permitir que essa classe intercepte alguma excepção lá na camada de resource, na camada de controlador REST e é ele que vai controlar agora
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError>entityNotFound (EntityNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError>entityNotFound (ResourceNotFoundException e, HttpServletRequest request){
 
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());

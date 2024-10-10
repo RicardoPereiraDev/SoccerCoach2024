@@ -3,12 +3,12 @@ package com.devsuperior.SoccerCoach202408.services;
 import com.devsuperior.SoccerCoach202408.dto.CategoryYouthFootballDTO;
 import com.devsuperior.SoccerCoach202408.entities.CategoryYouthFootball;
 import com.devsuperior.SoccerCoach202408.repositories.CategoryYouthFootballRepository;
-import com.devsuperior.SoccerCoach202408.services.exceptions.EntityNotFoundException;
+import com.devsuperior.SoccerCoach202408.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +45,7 @@ public class CategoryYouthFootballService {
     @Transactional(readOnly = true)
     public CategoryYouthFootballDTO findById(Long id) {
         Optional<CategoryYouthFootball> obj = repository.findById(id);
-        CategoryYouthFootball entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found")); //Se o CategoryYouthFootball não existir, este orElseThrow vai lançar esta excepção
+        CategoryYouthFootball entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found")); //Se o CategoryYouthFootball não existir, este orElseThrow vai lançar esta excepção
         return new CategoryYouthFootballDTO(entity);
     }
 
@@ -60,6 +60,19 @@ public class CategoryYouthFootballService {
 
         //Agora vou ter que retornar essa entidade para um CategoryYouthFootballDTO
         return new CategoryYouthFootballDTO(entity); //esta é a implementação
+    }
+
+    @Transactional //Aqui para não irmos ao banco de dados 2 vezes vamos utilizar o getReferenceById
+    public CategoryYouthFootballDTO update(Long id, CategoryYouthFootballDTO dto) {
+        try{
+            CategoryYouthFootball entity = repository.getReferenceById(id); // aqui com o getReferenceById ele não toca no banco de dados, ele vai instanciar um objecto provisorio, só quando mandar salvar, ai sim é que ele vai no banco de dados
+            entity.setName(dto.getName());
+            entity = repository.save(entity);
+            return new CategoryYouthFootballDTO(entity);
+        }
+        catch(EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id not found" + id);
+        }
     }
 }
 

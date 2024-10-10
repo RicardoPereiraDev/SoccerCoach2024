@@ -47,6 +47,17 @@ public class CategoryYouthFootballResource {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CategoryYouthFootballDTO> update(@PathVariable Long id, @RequestBody CategoryYouthFootballDTO dto){
+        dto = service.update(id,dto); //Eu chamo o insert, vou inserir esse dto no banco de dados e o resultado da inserção já com o id inserido pelo banco de dados vai retornar na variavel categoryYouthFootballDto
+        return ResponseEntity.ok().body(dto);
+    }
 }
+
+
+
+
+
 /*O nosso backend vai disponibilizar uma API, ou seja, são os recursos que voçe vai disponibilizar para as aplicações utilizar, por exemplo o app movel vai utilizar a sua API que seria esta parte do codigo backend,
 por exemplo aplicativo web vai utilizar sua API, então a sua API vai implementar através dos controladores REST e utiliza-se o termo de resources, é como se o recurso fosse um conceito e o controlador fosse a forma de implementar esse conceito  */
